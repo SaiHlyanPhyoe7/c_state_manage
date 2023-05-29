@@ -36,8 +36,8 @@ const useInfiniteScroll = (url: string, perPage: number = 10) => {
 
   const handleScroll = () => {
     if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
+      window.innerHeight + window.pageYOffset >=
+      document.documentElement.scrollHeight
     ) {
       fetchPlayers();
     }
