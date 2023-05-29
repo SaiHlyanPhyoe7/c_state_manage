@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../redux/feature/auth/loginSlice";
 import { RootState } from "@/redux/store";
@@ -11,8 +11,14 @@ import { IconAlertCircle, IconUser } from "@tabler/icons-react";
 function Page() {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
-  const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -29,9 +35,9 @@ function Page() {
       <form onSubmit={handleLogin}>
         <div>
           <Input
+            ref={inputRef}
             mb='xl'
             onChange={(e) => setUsername(e.target.value)}
-            value={username}
             icon={<IconUser size='1rem' />}
             placeholder='username'
           />

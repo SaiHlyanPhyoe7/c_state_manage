@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: childrenProps) => {
     if (storedUsername && storedUsername !== "") {
       dispatch(login({ username: storedUsername }));
     } else {
-      router.push("/login"); // Redirect to login page if not logged in
+      router.push("/login");
     }
     setLoading(false);
   }, [dispatch, router]);
@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }: childrenProps) => {
           height: "100svh",
         }}
       >
-        <Loader />;
+        <Loader />
       </Box>
-    ); // or show a loading spinner/placeholder
+    );
   }
 
   return <Box>{children}</Box>;

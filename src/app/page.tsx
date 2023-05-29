@@ -6,6 +6,8 @@ import { RootState } from "@/redux/store";
 import { Title } from "@mantine/core";
 import { login, logout } from "../redux/feature/auth/loginSlice";
 import { useEffect, useState } from "react";
+import { CreateTeam } from "@/components/createTeam/CreateTeam";
+import ShowTeam from "@/components/showTeam/ShowTeam";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ export default function Home() {
 
   return (
     <main>
-      {username ? (
+      {username && (
         <>
           <p>Login Username is: {username}</p>
           <button
@@ -34,8 +36,14 @@ export default function Home() {
           >
             logout
           </button>
+          <div>
+            <CreateTeam />
+          </div>
+          <div>
+            <ShowTeam />
+          </div>
         </>
-      ) : null}
+      )}
     </main>
   );
 }

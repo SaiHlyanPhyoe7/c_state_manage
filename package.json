@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/server": "^11.11.0",
     "@mantine/core": "^6.0.11",
+    "@mantine/form": "^6.0.11",
     "@mantine/hooks": "^6.0.11",
     "@mantine/next": "^6.0.11",
     "@reduxjs/toolkit": "^1.9.5",
@@ -26,10 +27,10 @@
     "next": "13.4.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.44.2",
     "react-redux": "^8.0.5",
     "sass": "^1.62.1",
     "typescript": "5.0.4",
+    "uuidv4": "^6.2.13",
     "zod": "^3.21.4"
   }
 }
