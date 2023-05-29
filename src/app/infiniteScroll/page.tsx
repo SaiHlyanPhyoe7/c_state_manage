@@ -8,8 +8,10 @@ import { IconArrowUp } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { logout } from "@/redux/feature/auth/loginSlice";
+import { useMediaQuery } from "@mantine/hooks";
 
 const InfiniteScrollExample = () => {
+  const forDesktop = useMediaQuery("(min-width: 56.25em)");
   const { players, loading } = useInfiniteScroll(
     "https://www.balldontlie.io/api/v1/players",
     10
@@ -56,7 +58,7 @@ const InfiniteScrollExample = () => {
       </Box>
       {players.map((player, index) => (
         <div key={index}>
-          <Text fz='80px'>
+          <Text fz={forDesktop ? "80px" : "60px"}>
             {index}. {player.first_name} {player.last_name}
           </Text>
         </div>

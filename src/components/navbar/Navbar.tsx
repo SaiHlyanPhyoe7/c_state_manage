@@ -1,11 +1,13 @@
 import { login, logout } from "@/redux/feature/auth/loginSlice";
 import { RootState } from "@/redux/store";
-import { Box, Button, Flex, Title } from "@mantine/core";
+import { Box, Button, Flex, Text, Title } from "@mantine/core";
 import { IconUser } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateTeam } from "../createTeam/CreateTeam";
+import Link from "next/link";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -16,13 +18,22 @@ const Navbar = () => {
   if (storedUsername) {
     dispatch(login({ username: storedUsername }));
   }
+  const forDesktop = useMediaQuery("(min-width: 36.25em)");
 
   return (
     <div>
       <Flex justify='space-between' align='center'>
-        <Box>
+        <Flex
+          direction={forDesktop ? "row" : "column"}
+          justify='space-between'
+          align='center'
+          gap='xl'
+        >
           <CreateTeam />
-        </Box>
+          <Link href='/infiniteScroll'>
+            <Text>Goto Infinite Scroll</Text>
+          </Link>
+        </Flex>
         <Flex justify='start' align='center'>
           <IconUser />
           <Title pr='xl' pl='xs' order={5}>
