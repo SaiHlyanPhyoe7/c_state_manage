@@ -8,15 +8,13 @@ import { login, logout } from "../redux/feature/auth/loginSlice";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-
   const dispatch = useDispatch();
   const router = useRouter();
+  const username = useSelector((state: RootState) => state.auth.username);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
-      setUsername(storedUsername);
       dispatch(login({ username: storedUsername }));
     } else {
       router.push("/login"); // Redirect to login page if not logged in

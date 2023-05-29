@@ -6,8 +6,11 @@ interface AuthState {
 }
 
 const getUsernameFromStorage = (): string => {
-  const username = localStorage.getItem("username");
-  return username ? username : "";
+  if (typeof localStorage !== "undefined") {
+    const username = localStorage.getItem("username");
+    return username ? username : "";
+  }
+  return "";
 };
 
 const authSlice = createSlice({

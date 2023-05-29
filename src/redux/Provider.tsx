@@ -5,6 +5,7 @@ import { store } from "./store";
 import { childrenProps } from "@/types/types";
 import { ReactQueryProvider } from "@/app/ReactQueryProvider";
 import { MantineProvider } from "@mantine/core";
+import { AuthProvider } from "@/app/AuthProvider";
 
 export function Providers({ children }: childrenProps) {
   return (
@@ -18,7 +19,7 @@ export function Providers({ children }: childrenProps) {
             colorScheme: "light",
           }}
         >
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </MantineProvider>
       </Provider>
     </ReactQueryProvider>
