@@ -89,8 +89,8 @@ export function CreateTeam() {
         {/* Modal content */}
       </Modal>
 
-      <Group position='center'>
-        <Button onClick={open}>Open modal</Button>
+      <Group position='left'>
+        <Button onClick={open}>Create Team</Button>
       </Group>
     </div>
   );
