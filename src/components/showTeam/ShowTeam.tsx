@@ -7,9 +7,11 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { IconTrash } from "@tabler/icons-react";
-import { IconEdit } from "@tabler/icons-react";
-import React from "react";
+import React, { useEffect } from "react";
+import HandleManipulation from "./handleManipulation/HandleManipulation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { initializeTeams } from "@/redux/feature/team/teamSlice";
 
 interface Team {
   id: string;
@@ -20,9 +22,18 @@ interface Team {
 }
 
 function ShowTeam() {
-  // Retrieve the teams array from localStorage
-  const teamsJSON = localStorage.getItem("teams");
-  const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Retrieve the teams data from local storage or any other source
+    const teamsJSON = localStorage.getItem("teams");
+    const teamsData: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
+
+    // Dispatch the initializeTeams action with the data
+    dispatch(initializeTeams(teamsData));
+  }, [dispatch]);
+
+  const teamGs = useSelector((state: RootState) => state.team.teams);
 
   return (
     <Container size='xl' my='xl'>
@@ -38,7 +49,7 @@ function ShowTeam() {
           { maxWidth: "xs", cols: 1, spacing: "sm" },
         ]}
       >
-        {teams.map((team) => (
+        {teamGs.map((team) => (
           <Box
             mx='md'
             p='xl'
@@ -47,14 +58,7 @@ function ShowTeam() {
           >
             <Flex justify='space-between' align='center'>
               <h3>{team.name}</h3>
-              <Flex justify='start' align='center'>
-                <ActionIcon>
-                  <IconEdit />
-                </ActionIcon>
-                <ActionIcon>
-                  <IconTrash />
-                </ActionIcon>
-              </Flex>
+              <HandleManipulation teamId={team.id} />
             </Flex>
             <Flex justify='space-between' align='center'>
               <Text>Player Count: </Text>
@@ -70,6 +74,31 @@ function ShowTeam() {
             </Flex>
           </Box>
         ))}
+        {/* {teams.map((team) => (
+          <Box
+            mx='md'
+            p='xl'
+            key={team.id}
+            sx={{ border: "1px solid gray", borderRadius: "15px" }}
+          >
+            <Flex justify='space-between' align='center'>
+              <h3>{team.name}</h3>
+              <HandleManipulation teamId={team.id} />
+            </Flex>
+            <Flex justify='space-between' align='center'>
+              <Text>Player Count: </Text>
+              <Text>{team.playerCount}</Text>
+            </Flex>
+            <Flex justify='space-between' align='center'>
+              <Text>Region: </Text>
+              <Text>{team.region}</Text>
+            </Flex>
+            <Flex justify='space-between' align='center'>
+              <Text>Country: </Text>
+              <Text>{team.country}</Text>
+            </Flex>
+          </Box>
+        ))} */}
       </SimpleGrid>
     </Container>
   );

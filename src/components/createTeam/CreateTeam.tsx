@@ -12,6 +12,7 @@ import { useForm } from "@mantine/form";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { createTeam } from "../../redux/feature/team/teamSlice";
+import { notifications } from "@mantine/notifications";
 
 interface formVal {
   name: string;
@@ -24,10 +25,10 @@ export function CreateTeam() {
   const [opened, { open, close }] = useDisclosure(false);
   const form = useForm<formVal>({
     initialValues: {
-      name: "Jane",
+      name: "",
       playerCount: 0,
-      region: "Yangon",
-      country: "Myanmar",
+      region: "",
+      country: "",
     },
   });
   const dispatch = useDispatch();
@@ -48,14 +49,22 @@ export function CreateTeam() {
     // Store the updated teams array in local storage
     localStorage.setItem("teams", JSON.stringify(updatedTeams));
 
+    notifications.show({
+      autoClose: 3000,
+      color: "green",
+      title: "Success",
+      message: `Team is successfully created.`,
+    });
+
     // Dispatch the createTeam action to update the global state
     dispatch(createTeam(team));
+    form.reset();
     close();
   };
 
   return (
     <div>
-      <Modal opened={opened} onClose={close} title='Create Your Team'>
+      <Modal opened={opened} onClose={close} title='Create Your Team' centered>
         <Box maw={400} mx='auto'>
           <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
             <TextInput

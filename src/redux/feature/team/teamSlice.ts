@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface Team {
   id: string;
   name: string;
-  playerCount: number;
+  playerCount?: number | "" | undefined;
   region: string;
   country: string;
 }
@@ -20,14 +20,19 @@ const teamSlice = createSlice({
   name: "team",
   initialState,
   reducers: {
+    initializeTeams: (state, action: PayloadAction<Team[]>) => {
+      state.teams = action.payload;
+    },
     createTeam: (state, action: PayloadAction<Team>) => {
       state.teams.push(action.payload);
     },
     updateTeam: (state, action: PayloadAction<Team>) => {
-      const { id } = action.payload;
-      const existingTeam = state.teams.find((team) => team.id === id);
-      if (existingTeam) {
-        Object.assign(existingTeam, action.payload);
+      const updatedTeam = action.payload;
+      const teamIndex = state.teams.findIndex(
+        (team) => team.id === updatedTeam.id
+      );
+      if (teamIndex !== -1) {
+        state.teams[teamIndex] = updatedTeam;
       }
     },
     removeTeam: (state, action: PayloadAction<string>) => {
@@ -37,5 +42,6 @@ const teamSlice = createSlice({
   },
 });
 
-export const { createTeam, updateTeam, removeTeam } = teamSlice.actions;
+export const { initializeTeams, createTeam, updateTeam, removeTeam } =
+  teamSlice.actions;
 export default teamSlice.reducer;
