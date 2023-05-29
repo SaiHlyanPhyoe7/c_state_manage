@@ -30,6 +30,7 @@ const Navbar = () => {
           </Title>
         </Flex>
         <Button
+          color='red'
           onClick={() => {
             dispatch(logout());
             router.push("/login");

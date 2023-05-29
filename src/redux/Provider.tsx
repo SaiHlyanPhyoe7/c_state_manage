@@ -20,7 +20,7 @@ export function Providers({ children }: childrenProps) {
             colorScheme: "light",
           }}
         >
-          <Notifications />
+          <Notifications position='top-right' />
           <AuthProvider>{children}</AuthProvider>
         </MantineProvider>
       </Provider>

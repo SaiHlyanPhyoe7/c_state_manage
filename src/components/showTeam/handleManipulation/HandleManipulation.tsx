@@ -10,6 +10,7 @@ import {
   NumberInput,
   UnstyledButton,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
@@ -32,7 +33,6 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
   const [team, setTeam] = useState<Team | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
-  // Fetch the team from local storage or any other data source
   const fetchTeam = () => {
     const teamsJSON = localStorage.getItem("teams");
     const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
@@ -42,16 +42,13 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
 
   const dispatch = useDispatch();
 
-  // Update the team with new values
   const handleUpdate = () => {
     if (team) {
-      // Update the team in the local storage
       const teamsJSON = localStorage.getItem("teams");
       const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
       const updatedTeams = teams.map((t) => (t.id === teamId ? team : t));
       localStorage.setItem("teams", JSON.stringify(updatedTeams));
 
-      // Dispatch the updateTeam action to update the Redux state
       dispatch(updateTeam(team));
 
       notifications.show({
@@ -64,9 +61,7 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
     }
   };
 
-  // Delete the team
   const handleDelete = () => {
-    // Remove the team from the local storage
     const teamsJSON = localStorage.getItem("teams");
     const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
     const updatedTeams = teams.filter((t) => t.id !== teamId);
@@ -80,7 +75,6 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
     dispatch(removeTeam(teamId));
   };
 
-  // Ensure the team is fetched when the component mounts
   React.useEffect(() => {
     fetchTeam();
   }, []);
@@ -94,9 +88,16 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
   return (
     <Box>
       <Flex justify='start' align='center'>
-        <Modal opened={opened} onClose={close} title='Update Team' centered>
+        <Modal
+          size='md'
+          opened={opened}
+          onClose={close}
+          title='Update Team'
+          centered
+        >
           <Box mx='auto'>
             <TextInput
+              pt='md'
               label='Name'
               value={name}
               onChange={(event) =>
@@ -104,11 +105,13 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
               }
             />
             <NumberInput
+              pt='md'
               label='Player Count'
               value={playerCount}
               onChange={(value) => setTeam({ ...team, playerCount: value })}
             />
             <TextInput
+              pt='md'
               label='Region'
               value={region}
               onChange={(event) =>
@@ -116,13 +119,14 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
               }
             />
             <TextInput
+              pt='md'
               label='Country'
               value={country}
               onChange={(event) =>
                 setTeam({ ...team, country: event.currentTarget.value })
               }
             />
-            <Button onClick={handleUpdate} mt='md'>
+            <Button mt='lg' onClick={handleUpdate}>
               Update
             </Button>
           </Box>

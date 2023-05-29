@@ -33,18 +33,16 @@ function Page() {
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <form onSubmit={handleLogin}>
-        <div>
-          <Input
-            ref={inputRef}
-            mb='xl'
-            onChange={(e) => setUsername(e.target.value)}
-            icon={<IconUser size='1rem' />}
-            placeholder='username'
-          />
-          <Button w='100%' type='submit'>
-            Login
-          </Button>
-        </div>
+        <Input
+          ref={inputRef}
+          mb='xl'
+          onChange={(e) => setUsername(e.target.value)}
+          icon={<IconUser size='1rem' />}
+          placeholder='username'
+        />
+        <Button w='100%' type='submit'>
+          Login
+        </Button>
       </form>
     </Container>
   );

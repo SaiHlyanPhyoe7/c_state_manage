@@ -10,9 +10,10 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createTeam } from "../../redux/feature/team/teamSlice";
 import { notifications } from "@mantine/notifications";
+import { RootState } from "@/redux/store";
 
 interface formVal {
   name: string;
@@ -23,12 +24,34 @@ interface formVal {
 
 export function CreateTeam() {
   const [opened, { open, close }] = useDisclosure(false);
+  const teamGs = useSelector((state: RootState) => state.team.teams);
+
   const form = useForm<formVal>({
     initialValues: {
       name: "",
       playerCount: 0,
       region: "",
       country: "",
+    },
+    validate: {
+      name: (value: string) => {
+        if (value.length < 4) {
+          return "Name must have at least 4 letters";
+        }
+
+        const isNameUnique = !teamGs.some((t) => t.name === value);
+        if (!isNameUnique) {
+          return "Team name must be unique";
+        }
+
+        return null;
+      },
+      playerCount: (value: number) =>
+        value <= 0 ? "Player count must be a positive number" : null,
+      region: (value: string) =>
+        value.length === 0 ? "Region is required" : null,
+      country: (value: string) =>
+        value.length === 0 ? "Country is required" : null,
     },
   });
   const dispatch = useDispatch();
@@ -39,14 +62,11 @@ export function CreateTeam() {
       id: uuidv4(),
     };
 
-    // Retrieve existing teams array from local storage
     const teamsJSON = localStorage.getItem("teams");
     const existingTeams = teamsJSON ? JSON.parse(teamsJSON) : [];
 
-    // Add the new team to the existing array
     const updatedTeams = [...existingTeams, team];
 
-    // Store the updated teams array in local storage
     localStorage.setItem("teams", JSON.stringify(updatedTeams));
 
     notifications.show({
@@ -56,7 +76,6 @@ export function CreateTeam() {
       message: `Team is successfully created.`,
     });
 
-    // Dispatch the createTeam action to update the global state
     dispatch(createTeam(team));
     form.reset();
     close();

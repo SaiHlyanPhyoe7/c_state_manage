@@ -20,11 +20,11 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<{ username: string }>) => {
       state.username = action.payload.username;
-      localStorage.setItem("username", action.payload.username); // Store username in localStorage
+      localStorage.setItem("username", action.payload.username);
     },
     logout: (state) => {
       state.username = "";
-      localStorage.removeItem("username"); // Remove username from localStorage
+      localStorage.removeItem("username");
     },
   },
 });
