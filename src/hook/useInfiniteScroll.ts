@@ -1,18 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-interface Player {
-  id: number;
-  first_name: string;
-  last_name: string;
-  height_feet: string;
-  height_inches: number;
-  position: string;
-}
-
-interface APIResponse {
-  data: Player[];
-}
+import { APIResponse, Player } from "@/types/types";
 
 const useInfiniteScroll = (url: string, perPage: number = 10) => {
   const [players, setPlayers] = useState<Player[]>([]);

@@ -21,40 +21,38 @@ const Navbar = () => {
   const forDesktop = useMediaQuery("(min-width: 36.25em)");
 
   return (
-    <div>
+    <Box>
       {username && (
-        <div>
-          <Flex justify='space-between' align='center'>
-            <Flex
-              direction={forDesktop ? "row" : "column"}
-              justify='space-between'
-              align='center'
-              gap='xl'
-            >
-              <CreateTeam />
-              <Link href='/infiniteScroll'>
-                <Text>Goto Infinite Scroll</Text>
-              </Link>
-            </Flex>
-            <Flex justify='start' align='center'>
-              <IconUser />
-              <Title pr='xl' pl='xs' order={5}>
-                {username}
-              </Title>
-            </Flex>
-            <Button
-              color='red'
-              onClick={() => {
-                dispatch(logout());
-                router.push("/login");
-              }}
-            >
-              logout
-            </Button>
+        <Flex justify='space-between' align='center'>
+          <Flex
+            direction={forDesktop ? "row" : "column"}
+            justify='space-between'
+            align='center'
+            gap='xl'
+          >
+            <CreateTeam />
+            <Link href='/infiniteScroll'>
+              <Text>Goto Infinite Scroll</Text>
+            </Link>
           </Flex>
-        </div>
+          <Flex justify='start' align='center'>
+            <IconUser />
+            <Title pr='xl' pl='xs' order={5}>
+              {username}
+            </Title>
+          </Flex>
+          <Button
+            color='red'
+            onClick={() => {
+              dispatch(logout());
+              router.push("/login");
+            }}
+          >
+            logout
+          </Button>
+        </Flex>
       )}
-    </div>
+    </Box>
   );
 };
 

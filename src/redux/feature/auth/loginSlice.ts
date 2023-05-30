@@ -1,8 +1,5 @@
+import { AuthState } from "@/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface AuthState {
-  username: string;
-}
 
 const getUsernameFromStorage = (): string => {
   if (typeof localStorage !== "undefined") {

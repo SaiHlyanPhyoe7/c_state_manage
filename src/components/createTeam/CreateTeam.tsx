@@ -14,13 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createTeam } from "../../redux/feature/team/teamSlice";
 import { notifications } from "@mantine/notifications";
 import { RootState } from "@/redux/store";
-
-interface formVal {
-  name: string;
-  playerCount: number;
-  region: string;
-  country: string;
-}
+import { formVal } from "@/types/types";
 
 export function CreateTeam() {
   const [opened, { open, close }] = useDisclosure(false);

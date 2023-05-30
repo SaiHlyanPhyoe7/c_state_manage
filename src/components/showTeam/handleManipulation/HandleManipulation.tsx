@@ -1,4 +1,5 @@
 import { removeTeam, updateTeam } from "@/redux/feature/team/teamSlice";
+import { HandleManipulationProps, TeamOP } from "@/types/types";
 import {
   ActionIcon,
   Box,
@@ -10,32 +11,19 @@ import {
   NumberInput,
   UnstyledButton,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-interface Team {
-  id: string;
-  name: string;
-  playerCount?: number | "" | undefined;
-  region: string;
-  country: string;
-}
-
-interface HandleManipulationProps {
-  teamId: string;
-}
-
 const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
-  const [team, setTeam] = useState<Team | null>(null);
+  const [team, setTeam] = useState<TeamOP | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
   const fetchTeam = () => {
     const teamsJSON = localStorage.getItem("teams");
-    const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
+    const teams: TeamOP[] = teamsJSON ? JSON.parse(teamsJSON) : [];
     const foundTeam = teams.find((team) => team.id === teamId);
     setTeam(foundTeam || null);
   };
@@ -45,7 +33,7 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
   const handleUpdate = () => {
     if (team) {
       const teamsJSON = localStorage.getItem("teams");
-      const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
+      const teams: TeamOP[] = teamsJSON ? JSON.parse(teamsJSON) : [];
       const updatedTeams = teams.map((t) => (t.id === teamId ? team : t));
       localStorage.setItem("teams", JSON.stringify(updatedTeams));
 
@@ -63,7 +51,7 @@ const HandleManipulation: React.FC<HandleManipulationProps> = ({ teamId }) => {
 
   const handleDelete = () => {
     const teamsJSON = localStorage.getItem("teams");
-    const teams: Team[] = teamsJSON ? JSON.parse(teamsJSON) : [];
+    const teams: TeamOP[] = teamsJSON ? JSON.parse(teamsJSON) : [];
     const updatedTeams = teams.filter((t) => t.id !== teamId);
     localStorage.setItem("teams", JSON.stringify(updatedTeams));
     notifications.show({

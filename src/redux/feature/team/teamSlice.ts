@@ -1,16 +1,5 @@
+import { TeamOP, TeamState } from "@/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Team {
-  id: string;
-  name: string;
-  playerCount?: number | "" | undefined;
-  region: string;
-  country: string;
-}
-
-interface TeamState {
-  teams: Team[];
-}
 
 const initialState: TeamState = {
   teams: [],
@@ -20,13 +9,13 @@ const teamSlice = createSlice({
   name: "team",
   initialState,
   reducers: {
-    initializeTeams: (state, action: PayloadAction<Team[]>) => {
+    initializeTeams: (state, action: PayloadAction<TeamOP[]>) => {
       state.teams = action.payload;
     },
-    createTeam: (state, action: PayloadAction<Team>) => {
+    createTeam: (state, action: PayloadAction<TeamOP>) => {
       state.teams.push(action.payload);
     },
-    updateTeam: (state, action: PayloadAction<Team>) => {
+    updateTeam: (state, action: PayloadAction<TeamOP>) => {
       const updatedTeam = action.payload;
       const teamIndex = state.teams.findIndex(
         (team) => team.id === updatedTeam.id

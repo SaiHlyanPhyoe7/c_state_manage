@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/feature/auth/loginSlice";
 import { useRouter } from "next/navigation";
-import { Box, Loader, Text } from "@mantine/core";
+import { Box, Loader } from "@mantine/core";
 
 export const AuthProvider = ({ children }: childrenProps) => {
   const dispatch = useDispatch();

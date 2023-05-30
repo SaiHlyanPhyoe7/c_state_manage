@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./page.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   increment,
@@ -15,7 +13,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   return (
-    <main className={styles.main}>
+    <main>
       <h2>{count}</h2>
       <button onClick={() => dispatch(increment())}>Increase</button>
       <button onClick={() => dispatch(decrement())}>Decrease</button>
